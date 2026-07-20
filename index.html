@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATEBAYO | Streaming Premium</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&family=Teko:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --accent-1: #ff7b00; 
+            --accent-2: #00bfff; 
+            --glass: rgba(15, 15, 20, 0.6);
+            --border: rgba(255, 123, 0, 0.3);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-dark);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* FONDO */
+        .background-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.95)),
+                url('https://www.dropbox.com/scl/fi/5hmx61tjp97pclldr0490/anime-moon-landscape.jpg?rlkey=t69vfwrpw0stoiaq22my822ee&st=1ijckwl4&raw=1');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px) contrast(1.2);
+            z-index: -1;
+            transform: scale(1.05);
+        }
+
+        .manga-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 4px 4px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            padding: 5rem 1rem 3rem;
+            text-align: center;
+        }
+
+        .hero-logo {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-1);
+            box-shadow: 0 0 25px rgba(255, 123, 0, 0.5), inset 0 0 15px rgba(255, 123, 0, 0.5);
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(4rem, 15vw, 8rem);
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 4px 4px 0px var(--accent-1), 8px 8px 0px rgba(255, 123, 0, 0.3);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--accent-2);
+            font-family: 'Teko', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* CUPÓN */
+        .promo-container {
+            max-width: 500px;
+            margin: 0 auto 4rem;
+            padding: 1.2rem;
+            background: var(--glass);
+            border-left: 5px solid var(--accent-1);
+            border-right: 5px solid var(--accent-2);
+            transform: skewX(-5deg);
+            backdrop-filter: blur(10px);
+        }
+
+        .promo-container-inner {
+            transform: skewX(5deg);
+        }
+
+        .input-group {
+            display: flex;
+            background: rgba(0,0,0,0.8);
+            padding: 5px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--accent-1);
+            padding: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            outline: none;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .btn-action {
+            background: var(--accent-1);
+            color: #000;
+            border: none;
+            padding: 0 20px;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+        
+        .btn-action:hover {
+            background: var(--accent-2);
+            color: #fff;
+            box-shadow: 0 0 15px var(--accent-2);
+        }
+
+        /* GRID Y TARJETAS */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 8rem;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(20,20,25,0.8) 0%, rgba(5,5,10,0.9) 100%);
+            border: 2px solid #222;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-1);
+            box-shadow: 0 15px 30px rgba(255, 123, 0, 0.2);
+        }
+
+        .card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.2rem;
+            color: #fff;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .card img {
+            width: 65px; height: 65px;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
+            transition: var(--transition);
+        }
+
+        .card:hover img {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 0 10px var(--accent-1));
+        }
+        
+        /* ESTILOS DE STOCK */
+        .stock-badge {
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-left: 2px solid;
+        }
+
+        /* Stock > 3 (Verde) */
+        .stock-high {
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.05);
+            border-left-color: #4ade80;
+        }
+
+        /* Stock <= 3 (Rojo) */
+        .stock-low {
+            color: #ff3366;
+            background: rgba(255, 51, 102, 0.05);
+            border-left-color: #ff3366;
+        }
+
+        .price {
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            font-size: 2.8rem;
+            color: var(--accent-1);
+            margin: 5px 0 20px;
+            letter-spacing: 2px;
+        }
+
+        .buy-btn {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--accent-2);
+            width: 100%;
+            padding: 0.8rem;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: skewX(-10deg);
+        }
+
+        .buy-btn span {
+            display: inline-block;
+            transform: skewX(10deg);
+        }
+
+        .buy-btn:hover {
+            background: var(--accent-2);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+            border-color: transparent;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none; position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
+            justify-content: center; align-items: center;
+        }
+
+        .modal-box {
+            background: #0a0a0a;
+            border: 3px solid var(--accent-1);
+            padding: 3rem 2rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            clip-path: polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%);
+        }
+
+        .modal-box h2 {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .confirm-btn {
+            background: var(--accent-1);
+            color: #000;
+            padding: 1rem;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.8rem;
+            text-decoration: none;
+            display: block;
+            margin-top: 20px;
+            transition: var(--transition);
+            text-transform: uppercase;
+            border-bottom: 4px solid #cc6200;
+        }
+        
+        .confirm-btn:hover {
+            background: #ff912a;
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            background: transparent;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            padding: 15px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            margin-top: 10px;
+            transition: color 0.3s;
+        }
+
+        .cancel-btn:hover { color: #fff; }
+
+    </style>
+</head>
+<body>
+
+    <div class="background-layer"></div>
+    <div class="manga-overlay"></div>
+
+    <header>
+        <!-- ¡AQUÍ ESTÁ LA NUEVA IMAGEN! -->
+        <img src="https://www.dropbox.com/scl/fi/u1c640ot3d4dn5vgcp0lw/WhatsApp-Image-2026-06-01-at-8.02.29-PM.jpeg?rlkey=sy9pa9g8mnwco98ojun4fciwh&st=avznwe2f&raw=1" class="hero-logo" alt="Logo">
+        
+        <h1>DATEBAYO</h1>
+        <p class="subtitle">SISTEMA DE STREAMING PREMIUM</p>
+    </header>
+
+    <div class="promo-container">
+        <div class="promo-container-inner">
+            <div class="input-group">
+                <input type="text" id="coupon-input" placeholder="INGRESA TU CUPÓN DE DESCUENTO">
+                <button class="btn-action" onclick="applyDiscount()">APLICAR</button>
+            </div>
+            <p id="msg" style="text-align:center; margin-top:10px; font-weight:800; font-size: 0.8rem; font-family: 'Nunito';"></p>
+        </div>
+    </div>
+
+    <main class="grid">
+        <!-- Netflix -->
+        <div class="card" data-price="12.00" data-stock="15">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+            <h3>Netflix Perfil</h3>
+            <div class="stock-badge stock-high">Stock: 18</div>
+            <div class="price">S/.12.00</div>
+            <button class="buy-btn" data-name="Netflix" data-link="https://wa.link/i4ucvq"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- Spotify -->
+        <div class="card" data-price="10.00" data-stock="8">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
+            <h3>Spotify Premium</h3>
+            <div class="stock-badge stock-high">Stock: 10</div>
+            <div class="price">S/.10.00</div>
+            <button class="buy-btn" data-name="Spotify" data-link="https://wa.link/n0v1j9"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- Max -->
+        <div class="card" data-price="7.50" data-stock="3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg" alt="Max">
+            <h3>Max Perfil</h3>
+            <div class="stock-badge stock-low">¡Últimos 3!</div>
+            <div class="price">S/.7.50</div>
+            <button class="buy-btn" data-name="Max Perfil" data-link="https://wa.link/fl1i2g"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- Disney -->
+        <div class="card" data-price="7.50" data-stock="12">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney">
+            <h3>Disney Perfil</h3>
+            <div class="stock-badge stock-high">Stock: 12</div>
+            <div class="price">S/.7.50</div>
+            <button class="buy-btn" data-name="Disney Perfil" data-link="https://wa.link/x06gyz"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- Prime Video -->
+        <div class="card" data-price="8.00" data-stock="20">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png" alt="Prime">
+            <h3>Prime Video</h3>
+            <div class="stock-badge stock-high">Stock: 6</div>
+            <div class="price">S/.8.00</div>
+            <button class="buy-btn" data-name="Prime Video" data-link="https://wa.link/hywpc4"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- Crunchyroll -->
+        <div class="card" data-price="7.00" data-stock="50">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQU6gyCL9hrOFlmRbWl_HOh3MoFNAqLxREDQ&s" alt="Crunchy">
+            <h3>Crunchyroll</h3>
+            <div class="stock-badge stock-high">Stock: 6</div>
+            <div class="price">S/.7.00</div>
+            <button class="buy-btn" data-name="Crunchyroll" data-link="https://wa.link/egw2wf"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- Vix -->
+        <div class="card" data-price="5.00" data-stock="5">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAiTHg3brwCfTOm3GyrsoQeck44yXwFCh6Iw&s" alt="Vix">
+            <h3>Vix Perfil</h3>
+            <div class="stock-badge stock-high">Stock: 4</div>
+            <div class="price">S/.5.00</div>
+            <button class="buy-btn" data-name="Vix Perfil" data-link="https://wa.link/tj0pbl"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- YouTube -->
+        <div class="card" data-price="7.00" data-stock="2">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHPajj8ZIW45SsYxM2IFuvCSjJtx5wfLH44g&s" alt="YouTube">
+            <h3>YouTube Premium</h3>
+            <div class="stock-badge stock-low">Stock 25</div>
+            <div class="price">S/.7.00</div>
+            <button class="buy-btn" data-name="YouTube Premium" data-link="https://wa.link/4eek8z"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- Canva -->
+        <div class="card" data-price="5.00" data-stock="10">
+            <img src="https://labelgrid.com/wp-content/uploads/2025/08/dsp-canva.svg" alt="Canva">
+            <h3>Canva PRO</h3>
+            <div class="stock-badge stock-high">Stock: 15</div>
+            <div class="price">S/.5.00</div>
+            <button class="buy-btn" data-name="Canva PRO" data-link="https://wa.link/o81lb1"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- Booyah -->
+        <div class="card" data-price="5.50" data-stock="25">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2lJfSqUy9BWlzeJo6y0B6pkKQ3NG24C1deg&s" alt="Booyah">
+            <h3>Pase Booyah</h3>
+            <div class="stock-badge stock-high">Stock: ilimitado</div>
+            <div class="price">S/.6.00</div>
+            <button class="buy-btn" data-name="Pase Booyah" data-link="https://wa.link/ziwrho"><span>COMPRAR</span></button>
+        </div>
+
+        <!-- Free Fire -->
+        <div class="card" data-price="CONSULTA" data-stock="∞">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt9zNUSQhlyJ346uaglyEC182hvD1O9P8v5g&s" alt="FF">
+            <h3>Diamantes FF</h3>
+            <div class="stock-badge stock-high">Stock: Disponible</div>
+            <div class="price" style="font-size: 1.8rem; margin-top: 15px;">CONSULTAR</div>
+            <button class="buy-btn" data-name="Diamantes FF" data-link="https://wa.link/agm81d"><span>VER TIENDA</span></button>
+        </div>
+
+        <!-- Doxeo -->
+        <div class="card" data-price="CONSULTA" data-stock="∞">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvwk4hP3qmr6cmQfMAjvYPDSq3zwc7gusqHA&s" alt="Doxeo">
+            <h3>Servicio Doxeo</h3>
+            <div class="stock-badge stock-high">Stock: Disponible</div>
+            <div class="price" style="font-size: 1.8rem; margin-top: 15px;">CONSULTAR</div>
+            <button class="buy-btn" data-name="Servicio Doxeo" data-link="https://wa.link/z1irr3"><span>CONSULTAR</span></button>
+        </div>
+    </main>
+
+    <div id="modal" class="modal">
+        <div class="modal-box">
+            <h2 id="m-title"></h2>
+            <div id="m-price" style="font-family: 'Teko', sans-serif; font-weight:700; font-size:4rem; color: var(--accent-1); margin:10px 0;"></div>
+            <p style="color: var(--accent-2); margin-bottom: 5px; font-weight: 900; text-transform: uppercase;">✓ Selección confirmada</p>
+            <p style="opacity:0.7; margin-bottom:20px; font-size: 0.9rem;">Te redirigiremos a WhatsApp para completar tu pedido de forma segura.</p>
+            <div style="display:flex; flex-direction: column;">
+                <a id="m-confirm" class="confirm-btn" target="_blank" onclick="closeModal()">IR A WHATSAPP</a>
+                <button class="cancel-btn" onclick="closeModal()">[ CANCELAR ]</button>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; opacity: 0.6;">
+        <p style="font-family: 'Teko', sans-serif; font-size: 1.5rem; letter-spacing: 5px; color: var(--accent-1);">DATEBAYO © 2026</p>
+    </footer>
+
+    <script>
+        const CODIGO_CUPON = "MAYO2026"; 
+        const PORCENTAJE_DESCUENTO = 10;   
+
+        let isDiscountApplied = false;
+
+        function applyDiscount() {
+            const code = document.getElementById('coupon-input').value.trim().toUpperCase();
+            const msg = document.getElementById('msg');
+            
+            if(code === CODIGO_CUPON.toUpperCase()) {
+                if (isDiscountApplied) {
+                    msg.style.color = '#00bfff';
+                    msg.innerText = "EL CUPÓN YA ESTÁ APLICADO";
+                    return;
+                }
+                
+                isDiscountApplied = true;
+                msg.style.color = '#ff7b00';
+                msg.innerText = `¡DESCUENTO APLICADO! -${PORCENTAJE_DESCUENTO}% EN TODO`; 
+                
+                const factorDescuento = (100 - PORCENTAJE_DESCUENTO) / 100;
+
+                document.querySelectorAll('.card').forEach(card => {
+                    const basePrice = parseFloat(card.dataset.price);
+                    if(!isNaN(basePrice)) {
+                        const final = (basePrice * factorDescuento).toFixed(2);
+                        card.dataset.currentPrice = final; 
+                        card.querySelector('.price').innerHTML = `<span style="font-size:1.2rem; color:#888; text-decoration:line-through; font-family:'Nunito', sans-serif;">S/.${basePrice.toFixed(2)}</span> S/.${final}`;
+                        card.querySelector('.price').style.color = '#00bfff'; 
+                    }
+                });
+            } else {
+                msg.style.color = '#ff3366';
+                msg.innerText = "CÓDIGO INVÁLIDO";
+                setTimeout(() => msg.innerText = "", 3000);
+            }
+        }
+
+        document.querySelectorAll('.buy-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = btn.closest('.card');
+                let displayPrice = card.dataset.currentPrice ? `S/.${card.dataset.currentPrice}` : card.dataset.price;
+                if(card.dataset.price === "CONSULTA") displayPrice = "CONSULTAR";
+
+                document.getElementById('m-title').innerText = btn.getAttribute('data-name');
+                document.getElementById('m-price').innerText = displayPrice;
+                document.getElementById('m-confirm').href = btn.getAttribute('data-link');
+                document.getElementById('modal').style.display = 'flex';
+            });
+        });
+
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        window.onclick = (e) => { if(e.target == document.getElementById('modal')) closeModal(); }
+    </script>
+</body>
+</html>
